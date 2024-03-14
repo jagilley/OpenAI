@@ -198,8 +198,16 @@ extension OpenAI {
         var components = URLComponents()
         components.scheme = "https"
         components.host = configuration.host
-        components.path = path
-        print("resulting url is", components, components.url)
+        
+        // Split the path into components
+        let pathComponents = path.split(separator: "/").map(String.init)
+        
+        // Append each path component to the URL components
+        pathComponents.forEach { component in
+            components.path += "/\(component)"
+        }
+
+        print("url is", components.url)
         return components.url!
     }
 }
