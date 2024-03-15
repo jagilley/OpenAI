@@ -197,14 +197,16 @@ extension OpenAI {
     func buildURL(path: String) -> URL {
         var components = URLComponents()
         components.scheme = "https"
-        components.host = configuration.host
         
-        // Split the path into components
-        let pathComponents = path.split(separator: "/").map(String.init)
-        
-        // Append each path component to the URL components
-        pathComponents.forEach { component in
-            components.path += "/\(component)"
+        // if configuration.host contains a /, add it to the path
+        if configuration.host.contains("/") {
+            print("host contains /")
+            print("setting host to", configuration.host.components(separatedBy: "/").first)
+            components.host = configuration.host.components(separatedBy: "/").first
+            components.path = "/" + (configuration.host.components(separatedBy: "/").last ?? "") + path
+        } else {
+            components.host = configuration.host
+            components.path = path
         }
 
         print("url is", components.url)
