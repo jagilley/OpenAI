@@ -201,10 +201,6 @@ extension OpenAI {
         
         // if configuration.host contains a /, add it to the path
         if configuration.host.contains("/") {
-            print("host contains /")
-            print("setting host to", configuration.host.components(separatedBy: "/").first)
-            print("setting path to", "/" + configuration.host.components(separatedBy: "/").dropFirst().joined(separator: "/"))
-            print("path is", path)
             components.host = configuration.host.components(separatedBy: "/").first
             components.path = "/" + configuration.host.components(separatedBy: "/").dropFirst().joined(separator: "/") + path
         } else {
